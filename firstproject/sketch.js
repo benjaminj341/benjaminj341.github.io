@@ -45,6 +45,4 @@ function draw() {
   if (blueamount === 0){
     bluechange *= -1;
   }
-console.log(redAmount);
-console.log(blueamount);
-console.log(greenamount);
+}
