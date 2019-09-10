@@ -48,3 +48,11 @@ function draw() {
 console.log(redAmount);
 console.log(blueamount);
 console.log(greenamount);
+
+function pop() {
+  fill(150,60,175);
+  rect(450, 200, 100, 75);
+  moveTo(600, 600);
+  moveTo(200,200);
+}
+}
