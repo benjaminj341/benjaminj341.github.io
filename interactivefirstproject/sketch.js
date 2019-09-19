@@ -4,6 +4,10 @@ let spaceinvader;
 let shoot = false;
 let bullety;
 let bulletx;
+let canshoot = true;
+var inavders = []
+let invadery = 0;
+
 
 function preload(){
     spaceman = loadImage("assets/spaceshooter.png");
@@ -17,7 +21,6 @@ function setup(){
 }
 
 
-
 function draw(){
     background(0);
     image(spaceman, x, windowHeight - 25, 75, 75);
@@ -29,20 +32,35 @@ function draw(){
     if (keyIsDown(LEFT_ARROW) && x > 0){
         x -= 5;
     }
+    image(spaceinvader, random(0, width), invadery, 80, 75);
 
     displayBullet();
+    displayInvader();
 }
 function mouseClicked(){
-    bullety = height - 100;
-    bulletx = x;
+    if (canshoot == true){
+        bullety = height - 100;
+        bulletx = x;
+        canshoot = false;
+    }
 }
 
 
 function displayBullet() {    
-    if (bullety <= height){
+    if (bullety >= 0){
         bullety -= 5;
     }
-
+    else if (bullety < 0){
+        canshoot = true;
+    }
     fill(255);
     rect(bulletx, bullety, 5, 30);
+}
+
+function displayInvader(){
+    let y = 1;
+    invadery = y;
+    if (y < height){
+        y += 1;
+    }
 }
