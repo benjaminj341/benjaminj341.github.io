@@ -1,4 +1,4 @@
-let x = 200;
+
 let spaceman;
 let spaceinvader;
 let shoot = false;
@@ -8,6 +8,9 @@ let canshoot = true;
 var inavders = []
 let invadery = 0;
 let wavecome = true;
+let lastwave;
+let startingy;
+let x = 500;
 
 function preload(){
     spaceman = loadImage("assets/spaceshooter.png");
@@ -34,12 +37,19 @@ function draw(){
         x -= 5;
     }
     
-    if (wavecome == true){
-        for (i = 0; i < 5; i++){
-            image(spaceinvader, random(0, width), invadery, 80, 75);
+    for (i = 0; i < 5; i++){
+        image(spaceinvader, random(0, width), invadery, 80, 75);
+    }
+        
+
+    if (wavecome === true){
+        lastwave = millis();
+        invadery = 0;
+        
+        
         }
-        wavecome = false;
-}
+    
+    invadery -= 0.003;
     checkWave();
     displayBullet();
 }
@@ -65,10 +75,10 @@ function displayBullet() {
 }
 
 function checkWave(){
-    
-    for (i = 0, i < 50; i++;){
+    if (millis() - lastwave >= 40000){
+        wavecome = true;
+    }
+    else{
         wavecome = false;
     }
-    wavecome = true;
-       
 }
