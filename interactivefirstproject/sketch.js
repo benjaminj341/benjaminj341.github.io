@@ -5,22 +5,24 @@ let shoot = false;
 let bullety;
 let bulletx;
 let canshoot = true;
-var inavders = []
+let invaders = []
 let invadery = 0;
 let wavecome = true;
 let lastwave;
 let startingy;
 let x = 500;
 
+
 function preload(){
     spaceman = loadImage("assets/spaceshooter.png");
-    spaceinvader = loadImage("assets/spaceinvader.png")
+    spaceinvader = loadImage("assets/spaceinvader.png");
+    space = loadImage("assets/space.png");
 } 
 
 
 function setup(){
     createCanvas(windowWidth, windowHeight);
-    background(0);
+    background(space);
 }
 
 
@@ -30,26 +32,25 @@ function draw(){
     imageMode(CENTER);
 
     if (keyIsDown(RIGHT_ARROW) && x < windowWidth){
-        x += 5;
+        x += 10;
     }
 
     if (keyIsDown(LEFT_ARROW) && x > 0){
-        x -= 5;
+        x -= 10;
     }
     
-    for (i = 0; i < 5; i++){
-        image(spaceinvader, random(0, width), invadery, 80, 75);
-    }
         
-
     if (wavecome === true){
+        for (let i = 0; i < 5; i++){
+            invaders.push(random(0, width))
+        }
         lastwave = millis();
         invadery = 0;
-        
-        
         }
+        
+        makeAliens();
     
-    invadery -= 0.003;
+    invadery += 1;
     checkWave();
     displayBullet();
 }
@@ -75,10 +76,18 @@ function displayBullet() {
 }
 
 function checkWave(){
-    if (millis() - lastwave >= 40000){
+    if (millis() - lastwave >= 4000){
         wavecome = true;
     }
     else{
         wavecome = false;
     }
+}
+
+function makeAliens(){
+    image(spaceinvader, invaders[0], invadery, 80, 75);
+    image(spaceinvader, invaders[1], invadery, 80, 75);
+    image(spaceinvader, invaders[2], invadery, 80, 75);
+    image(spaceinvader, invaders[3], invadery, 80, 75);
+    image(spaceinvader, invaders[4], invadery, 80, 75);
 }
