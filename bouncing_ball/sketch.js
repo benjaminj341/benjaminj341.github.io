@@ -20,7 +20,8 @@ function draw(){
     y += dy;
     if (mode === "circle"){
         ellipse(x, y, radius);
-        fill(0);}
+        fill(0);
+    }
     else if (mode === "rect"){
         rect(x, y, radius, radius)
         fill(0);
