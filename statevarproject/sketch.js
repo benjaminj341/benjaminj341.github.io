@@ -1,7 +1,7 @@
 let pop = 500;
 let phase = "start";
 let devstage = 1;
-let onus = 20;
+let onus = 5;
 let parkcount = 0;
 let windmillcount = 0;
 let housecount = 0;
@@ -45,7 +45,7 @@ function draw(){
     textSize(40);
     text("Population", width/2 - 150, height/2 - 200);
     textSize(80);
-    text(pop, width/2 - 125, height/2 - 100);
+    text(Math.round(pop), width/2 - 125, height/2 - 100);
 
     textSize(25);
     text("Parks: " + parkcount, 100, 100);
@@ -133,6 +133,7 @@ function drawBuyBoxes(){
 }
 
 function mouseClicked(){
+  console.log(mouseX, mouseY);
   if (mouseX > width/2 + 400 && mouseX < width/2 + 600){
     if (mouseY > height/2 + 25 && mouseY < height/2 + 325){
       if (bux - 100 >= 0){
@@ -181,14 +182,15 @@ function mouseClicked(){
       }
     }
   }
-  else if (mouseX > width/2 + 600 && mouseX < width/2 - 1000){
+  else if (mouseX > width/2 + 600 && mouseX < width/2 + 1000){
     if (mouseY > height/2 - 400 && mouseY < height/2 - 200){
-      newYear();
-    }
+      newYear();   
   }
 }
 
 function newYear(){
   popchange = (housecount / 2) + windmillcount + (schoolcount * 2) + (hospitalcount * 2.5) + (parkcount * 1.5) + (officetowercount * 4) - onus;
-  pop
+  pop += popchange;
+  bux += Math.round(pop/100);
+  }
 }
