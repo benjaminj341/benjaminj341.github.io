@@ -8,8 +8,9 @@ let housecount = 0;
 let schoolcount = 0;
 let hospitalcount = 0;
 let officetowercount = 0;
-let bux = 5;
+let bux = 10;
 let popchange;
+let onuschange = [-1, 0, 1, 2, 3];
 
 function preload(){
   girl = loadImage('assets/startinggirl.png');
@@ -21,6 +22,8 @@ function preload(){
   school = loadImage('assets/school.png');
   officetower = loadImage('assets/officetower.png');
   park = loadImage('assets/park.png');
+  uparrow = loadImage('assets/uparrow.png');
+  downarrow = loadImage('assets/downarrow.png');
 }
 
 
@@ -90,7 +93,7 @@ function drawBuyBoxes(){
   if (phase === "play"){
     fill("grey");
     rect(width/2 - 600, height/2 + 150, 200, 200);
-    image(park, width/2 - 575, height + 150, 150, 150);
+    image(park, width/2 - 575, height/2 + 150, 150, 150);
     textSize(15);
     fill("black");
     text("Buy Park(10 bux)", width/2 - 575, height/2 + 145);
@@ -144,9 +147,9 @@ function mouseClicked(){
   }
   else if(mouseX > width/2 + 200 && mouseX < width/2 + 400){
     if (mouseY > height/2 + 25 && mouseY < height/2 + 325){
-      if (bux - 25 >= 0){
+      if (bux - 20 >= 0){
         schoolcount += 1;
-        bux -= 25;
+        bux -= 20;
       }
     }
   }
@@ -192,5 +195,21 @@ function newYear(){
   popchange = (housecount / 2) + windmillcount + (schoolcount * 2) + (hospitalcount * 2.5) + (parkcount * 1.5) + (officetowercount * 4) - onus;
   pop += popchange;
   bux += Math.round(pop/100);
+  onus += random(onuschange);
+  updateChange();
+  }
+}
+
+
+function updateChange(){
+  textSize(30);
+  text(Math.round(popchange), width/2 - 100, height/2 - 200);
+  if (popchange > 0){
+    image(uparrow, width/2 - 75, height/2 + 225, 80, 80);
+    console.log(80);
+  }
+  else if (popchange < 0){
+    image(downarrow, width/2 - 75, height/2 - 225, 80, 80);
+    console.log(0);
   }
 }
