@@ -11,10 +11,10 @@ let officetowercount = 0;
 let bux = 10;
 let popchange;
 let onuschange = [-1, 0, 1, 2, 3];
-let disaster = [0, 0, 0, 0, 0, 1];
+let disaster = [false, false, false, false, false, false, true];
 let losingPeople;
 let gainingPeople;
-let disastertime;
+let displayDisasterMessage = false;
 
 function preload(){
   girl = loadImage('assets/startinggirl.png');
@@ -83,7 +83,12 @@ function draw(){
       console.log(80);
     }
     
-    
+    if (displayDisasterMessage === true){
+      textSize(30);
+      fill("red");
+      text("OH NO! A disaster has occured!", width/2 - 150, height/2 - 300);
+    }
+
     textSize(30);
     fill("black");
     text(Math.round(popchange), width/2 + 100, height/2 - 140);
@@ -214,20 +219,19 @@ function mouseClicked(){
 }
 
 function newYear(){
-  if (disastertime = true){
-    onus *=2;
+
+  if (random(disaster) === true){
+    popchange -= onus * 5;
+    displayDisasterMessage = true;
   }
+
   popchange = (housecount / 2) + windmillcount + (schoolcount * 2) + (hospitalcount * 2.5) + (parkcount * 1.5) + (officetowercount * 4) - onus;
   pop += popchange;
-  if (disastertime = true){
-    onus = onus/2;
-  }
+ 
   bux += Math.round(pop/100);
   onus += random(onuschange);
-  disasterchance = random(disaster);
-  if (disasterchance = 1){
-    disastertime = true;
-  }
+
+  
   updateChange();
   }
 }
