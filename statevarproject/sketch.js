@@ -1,7 +1,7 @@
 let pop = 500;
 let phase = "start";
 let devstage = 1;
-let onus = 5;
+let onus = 4;
 let parkcount = 0;
 let windmillcount = 0;
 let housecount = 0;
@@ -11,10 +11,15 @@ let officetowercount = 0;
 let bux = 10;
 let popchange;
 let onuschange = [-1, 0, 1, 2, 3];
+let disaster = [0, 0, 0, 0, 0, 1];
+let losingPeople;
+let gainingPeople;
+let disastertime;
 
 function preload(){
   girl = loadImage('assets/startinggirl.png');
   smalltown1 = loadImage('assets/smalltown1.png');
+  smalltown2 = loadImage('assets/smalltown2.png');
   speechbubble = loadImage('assets/speechbubble.png');
   windmill = loadImage('assets/Windmill.png');
   house = loadImage('assets/house.png');
@@ -68,7 +73,20 @@ function draw(){
     textSize(45);
     fill("yellow");
     text("Bux: " + bux, width/2 + 450, height/2 - 300);
-
+    
+    if (losingPeople === true){
+      image(downarrow, width/2 + 125, height/2 - 175 , 80, 80);
+      console.log(0);
+    }
+    else if (gainingPeople === true){
+      image(uparrow, width/2 + 125, height/2 - 175, 80, 80);
+      console.log(80);
+    }
+    
+    
+    textSize(30);
+    fill("black");
+    text(Math.round(popchange), width/2 + 100, height/2 - 140);
   }
   drawBuyBoxes();
 }
@@ -82,10 +100,15 @@ function keyPressed(){
 }
 
 function backgroundSet(){
-  if (devstage === 1){
+  if (pop < 1000){
     background(255);
     imageMode(CORNER);
     background(smalltown1);
+  }
+  else if (pop >= 1000 && pop < 10000){
+    background(255);
+    imageMode(CORNER);
+    background(smalltown2);
   }
 }
 
@@ -136,7 +159,6 @@ function drawBuyBoxes(){
 }
 
 function mouseClicked(){
-  console.log(mouseX, mouseY);
   if (mouseX > width/2 + 400 && mouseX < width/2 + 600){
     if (mouseY > height/2 + 25 && mouseY < height/2 + 325){
       if (bux - 100 >= 0){
@@ -192,24 +214,32 @@ function mouseClicked(){
 }
 
 function newYear(){
+  if (disastertime = true){
+    onus *=2;
+  }
   popchange = (housecount / 2) + windmillcount + (schoolcount * 2) + (hospitalcount * 2.5) + (parkcount * 1.5) + (officetowercount * 4) - onus;
   pop += popchange;
+  if (disastertime = true){
+    onus = onus/2;
+  }
   bux += Math.round(pop/100);
   onus += random(onuschange);
+  disasterchance = random(disaster);
+  if (disasterchance = 1){
+    disastertime = true;
+  }
   updateChange();
   }
 }
 
 
 function updateChange(){
-  textSize(30);
-  text(Math.round(popchange), width/2 - 100, height/2 - 200);
   if (popchange > 0){
-    image(uparrow, width/2 - 75, height/2 + 225, 80, 80);
-    console.log(80);
+    gainingPeople = true;
+    losingPeople = false;
   }
   else if (popchange < 0){
-    image(downarrow, width/2 - 75, height/2 - 225, 80, 80);
-    console.log(0);
+    losingPeople = true;
+    gainingpeople = false;    
   }
 }
