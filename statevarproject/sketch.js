@@ -11,7 +11,7 @@ let officetowercount = 0;
 let bux = 10;
 let popchange;
 let onuschange = [-1, 0, 1, 2, 3];
-let disaster = [false, false, false, false, false, false, true];
+let disaster = [false, false, false, false, false, false, false, false, false, true];
 let losingPeople;
 let gainingPeople;
 let displayDisasterMessage = false;
@@ -76,11 +76,11 @@ function draw(){
     
     if (losingPeople === true){
       image(downarrow, width/2 + 125, height/2 - 175 , 80, 80);
-      console.log(0);
+      
     }
     else if (gainingPeople === true){
       image(uparrow, width/2 + 125, height/2 - 175, 80, 80);
-      console.log(80);
+      
     }
     
     if (displayDisasterMessage === true){
@@ -221,9 +221,11 @@ function mouseClicked(){
 function newYear(){
 
   if (random(disaster) === true){
-    popchange -= onus * 5;
+    bux = 0;
+    popchange -= pop * 0.02;
     displayDisasterMessage = true;
   }
+  else displayDisasterMessage = false;
 
   popchange = (housecount / 2) + windmillcount + (schoolcount * 2) + (hospitalcount * 2.5) + (parkcount * 1.5) + (officetowercount * 4) - onus;
   pop += popchange;
