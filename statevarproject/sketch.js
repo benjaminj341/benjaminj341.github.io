@@ -1,3 +1,15 @@
+//CS30
+//Mr. Schellenberg
+//Ben Jorgenson
+//Town Builder game
+//
+//
+
+
+
+
+
+//defining all variables we will be needing + arrays
 let pop = 500;
 let phase = "start";
 let devstage = 1;
@@ -17,7 +29,9 @@ let gainingPeople;
 let displayDisasterMessage = false;
 let pressed = 0;
 let startingtext;
+let popcolour;
 
+//loading in all the images that are used in the project
 function preload(){
   girl = loadImage('assets/startinggirl.png');
   smalltown1 = loadImage('assets/smalltown1.png');
@@ -31,35 +45,42 @@ function preload(){
   park = loadImage('assets/park.png');
   uparrow = loadImage('assets/uparrow.png');
   downarrow = loadImage('assets/downarrow.png');
+  city1 = loadImage('assets/city1.png');
+  city2 = loadImage('assets/city2.png');
 }
 
 
-
+//the canvas is the height and width of the screen
 function setup(){
   createCanvas(windowWidth, windowHeight);
   backgroundSet();
 }
 
+//draw loop
 function draw(){
   backgroundSet();
+  //the phase variable is set to start at the beginning. It displays a sprite who tells the user what to do
   if (phase === "start"){
 
     image(girl, width/2, height/2 - 100, 500, 500);
     image(speechbubble, width/2 - 100, height/2 - 250, 450, 300);
     textSize(25);
     text(startingtext, width/2 - 50, height/2 - 200);
+    //depending on how many times the enter key is pressed, the pressed variable goes up and the message changes. If it is clicked four times, the phase is changed to play
     if (pressed === 0){
       startingtext = "Welcome to town builder";
     }
   }
 
   else if (phase === "play"){
-    fill("black");
+    //text displayng the population and the change in population from the last year
+    fill(popcolour);
     textSize(40);
     text("Population", width/2 - 150, height/2 - 200);
     textSize(80);
     text(Math.round(pop), width/2 - 125, height/2 - 100);
 
+    //text on the left side displays the amount of each builsing that the user has accumulated
     textSize(25);
     text("Parks: " + parkcount, 100, 100);
     text("Windmills: " + windmillcount, 100, 125);
@@ -68,17 +89,19 @@ function draw(){
     text("Hospitals: " + hospitalcount, 100, 200);
     text("Office Towers: " + officetowercount, 100, 225);
 
-
+    //next year button. user presses this if they are done buying things for the year or are out of bux. Triggers nextYear function
     fill("green");
     rect(width/2 + 600, height/2 - 400, 400, 200);
     textSize(25);
     fill("black");
     text("Next Year", width/2 + 650, height/2 - 300);
 
+    //amount of bux that the player has
     textSize(45);
     fill("yellow");
     text("Bux: " + bux, width/2 + 450, height/2 - 300);
     
+    //variables losingPeople and gainingPeople are set depending on the change in population from the last year. This is how we know whether to display the up arrow or the down arrow next to the population change
     if (losingPeople === true){
       image(downarrow, width/2 + 125, height/2 - 175 , 80, 80);
       
@@ -87,6 +110,7 @@ function draw(){
       image(uparrow, width/2 + 125, height/2 - 175, 80, 80);      
     }
     
+    //displays message indicating that there has been a disaster
     if (displayDisasterMessage === true){
       textSize(30);
       fill("red");
@@ -125,11 +149,25 @@ function backgroundSet(){
     background(255);
     imageMode(CORNER);
     background(smalltown1);
+    popcolour = "black";
   }
   else if (pop >= 1000 && pop < 10000){
     background(255);
     imageMode(CORNER);
     background(smalltown2);
+    popcolour = "black";
+  }
+  else if (pop >= 10000 && pop < 100000){
+    background(255);
+    imageMode(CORNER);
+    background(city1);
+    popcolour = "black";
+  }
+  else if (pop >= 100000 && pop < 1000000){
+    background(255);
+    imageMode(CORNER);
+    background(city2);
+    popcolour = "grey";
   }
 }
 
@@ -140,42 +178,42 @@ function drawBuyBoxes(){
     image(park, width/2 - 575, height/2 + 150, 150, 150);
     textSize(15);
     fill("black");
-    text("Buy Park(10 bux)", width/2 - 575, height/2 + 145);
+    text("Buy Park(10 bux)", width/2 - 575, height/2 + 330);
 
     fill("grey");
     rect(width/2 - 400, height/2 + 150, 200, 200);
     image(windmill, width/2 - 375, height/2 + 150, 150, 150);
     textSize(15);
     fill("black");
-    text("Buy Windmill(5 bux)", width/2 - 375, height/2 + 145);
+    text("Buy Windmill(5 bux)", width/2 - 375, height/2 + 330);
 
     fill("grey");
     rect(width/2 - 200, height/2 + 150, 200, 200);
     image(house, width/2 - 175, height/2 + 150, 150, 150);
     textSize(15);
     fill("black");
-    text("Buy House(2 bux)", width/2 - 175, height/2 + 145);
+    text("Buy House(2 bux)", width/2 - 175, height/2 + 330);
      
     fill("grey");
     rect(width/2, height/2 + 150, 200, 200);
     image(hospital, width/2 + 25, height/2 + 150, 150, 150);
     textSize(15);
     fill("black")
-    text("Buy Hospital(25 bux)", width/2 + 25, height/2 + 145);
+    text("Buy Hospital(25 bux)", width/2 + 25, height/2 + 330);
     
     fill("grey");
     rect(width/2 + 200, height/2 + 150, 200, 200);
     image(school, width/2 + 225, height/2 + 150, 150, 150);
     textSize(15);
     fill("black");
-    text("Buy School(20 bux)", width/2 + 225, height/2 + 145);
+    text("Buy School(20 bux)", width/2 + 225, height/2 + 330);
     
     fill("grey");
     rect(width/2 + 400, height/2 + 150, 200, 200);
     image(officetower, width/2 + 425, height/2 + 150, 150, 150);
     textSize(15);
     fill("black");
-    text("Buy Office Tower(100 bux)", width/2 + 425, height/2 + 145);
+    text("Buy Office Tower(100 bux)", width/2 + 425, height/2 + 330);
   }
 }
 
@@ -249,7 +287,6 @@ function newYear(){
   }
   if (random(disaster) === true){
     bux = 0;
-    popchange -= pop * 0.02;
     displayDisasterMessage = true;
   }
   else displayDisasterMessage = false;
@@ -266,6 +303,6 @@ function updateChange(){
   }
   else if (popchange < 0){
     losingPeople = true;
-    gainingpeople = false;    
+    gainingPeople = false;    
   }
 }
