@@ -15,6 +15,8 @@ let disaster = [false, false, false, false, false, false, false, false, false, t
 let losingPeople;
 let gainingPeople;
 let displayDisasterMessage = false;
+let pressed = 0;
+let startingtext;
 
 function preload(){
   girl = loadImage('assets/startinggirl.png');
@@ -43,9 +45,12 @@ function draw(){
   if (phase === "start"){
 
     image(girl, width/2, height/2 - 100, 500, 500);
-    image(speechbubble, width/2 - 50, height/2 - 250, 300, 300);
+    image(speechbubble, width/2 - 100, height/2 - 250, 450, 300);
     textSize(25);
-    text("Buy stuff for your town!", width/2 - 50, height/2 - 200);
+    text(startingtext, width/2 - 50, height/2 - 200);
+    if (pressed === 0){
+      startingtext = "Welcome to town builder";
+    }
   }
 
   else if (phase === "play"){
@@ -79,8 +84,7 @@ function draw(){
       
     }
     else if (gainingPeople === true){
-      image(uparrow, width/2 + 125, height/2 - 175, 80, 80);
-      
+      image(uparrow, width/2 + 125, height/2 - 175, 80, 80);      
     }
     
     if (displayDisasterMessage === true){
@@ -99,6 +103,18 @@ function draw(){
 function keyPressed(){
   if (phase === "start"){
     if (keyCode === ENTER){
+      pressed += 1;
+    }
+    if (pressed === 0){
+      startingtext = "Welcome to town builder";
+    }
+    if (pressed === 1){
+      startingtext = "You are the mayor of a failing town";
+    }
+    if (pressed === 2){
+      startingtext = "Buy things to make people come to your town";
+    }
+    if (pressed === 3){
       phase = "play";
     }
   }
@@ -220,12 +236,7 @@ function mouseClicked(){
 
 function newYear(){
 
-  if (random(disaster) === true){
-    bux = 0;
-    popchange -= pop * 0.02;
-    displayDisasterMessage = true;
-  }
-  else displayDisasterMessage = false;
+ 
 
   popchange = (housecount / 2) + windmillcount + (schoolcount * 2) + (hospitalcount * 2.5) + (parkcount * 1.5) + (officetowercount * 4) - onus;
   pop += popchange;
@@ -233,6 +244,15 @@ function newYear(){
   bux += Math.round(pop/100);
   onus += random(onuschange);
 
+  if (pop <= 0){
+    pop = 0;
+  }
+  if (random(disaster) === true){
+    bux = 0;
+    popchange -= pop * 0.02;
+    displayDisasterMessage = true;
+  }
+  else displayDisasterMessage = false;
   
   updateChange();
   }
