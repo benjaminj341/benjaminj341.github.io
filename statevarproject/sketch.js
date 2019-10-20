@@ -110,13 +110,14 @@ function draw(){
       image(uparrow, width/2 + 125, height/2 - 175, 80, 80);      
     }
     
-    //displays message indicating that there has been a disaster
+    //displays message indicating that there has been a disaster if told
     if (displayDisasterMessage === true){
       textSize(30);
       fill("red");
       text("OH NO! A disaster has occured!", width/2 - 150, height/2 - 300);
     }
 
+    //displays the difference in population from the previous year
     textSize(30);
     fill("black");
     text(Math.round(popchange), width/2 + 100, height/2 - 140);
@@ -127,7 +128,7 @@ function draw(){
 function keyPressed(){
   if (phase === "start"){
     if (keyCode === ENTER){
-      pressed += 1;
+      pressed += 1;//pressing enter changes the pressed variable and the message
     }
     if (pressed === 0){
       startingtext = "Welcome to town builder";
@@ -139,11 +140,12 @@ function keyPressed(){
       startingtext = "Buy things to make people come to your town";
     }
     if (pressed === 3){
-      phase = "play";
+      phase = "play";//on the third time you press it the phase changes to play and everything goes away
     }
   }
 }
 
+//backgroundSet function called in the draw loop. Depending on the population the background will change
 function backgroundSet(){
   if (pop < 1000){
     background(255);
@@ -167,10 +169,11 @@ function backgroundSet(){
     background(255);
     imageMode(CORNER);
     background(city2);
-    popcolour = "grey";
+    popcolour = "grey";//the population and the population change are both filled with popcolour. the colour of the writing must change with the background so you can see it
   }
 }
 
+//draws all the boxes which you must click to but buildings
 function drawBuyBoxes(){
   if (phase === "play"){
     fill("grey");
@@ -217,6 +220,7 @@ function drawBuyBoxes(){
   }
 }
 
+//detection. detects if you have clicked any buttons and performs the necessary actions if so
 function mouseClicked(){
   if (mouseX > width/2 + 400 && mouseX < width/2 + 600){
     if (mouseY > height/2 + 25 && mouseY < height/2 + 325){
@@ -273,18 +277,21 @@ function mouseClicked(){
 }
 
 function newYear(){
-
+//this function  is all that happens when the user presses the "New Year" button.
  
-
+//this is the formula for the population change. "onus" is a variable which subtracts from the total to keep the game difficult
   popchange = (housecount / 2) + windmillcount + (schoolcount * 2) + (hospitalcount * 2.5) + (parkcount * 1.5) + (officetowercount * 4) - onus;
   pop += popchange;
  
-  bux += Math.round(pop/100);
-  onus += random(onuschange);
+  bux += Math.round(pop/100);//gives you tax money for that year depending on how many people you have
+  onus += random(onuschange);//changes the onus by a random amount in onuschange array. Either 1, 0, -1, or -2 
 
+  //can't have negative people
   if (pop <= 0){
     pop = 0;
   }
+
+  //takes a random value from the "disaster" array. There are a whole bunch of falses and one true. If the true is picked, that means a disaster has occured and you lose all your money and it calls for the disaster message to be shown on the screen
   if (random(disaster) === true){
     bux = 0;
     displayDisasterMessage = true;
@@ -295,7 +302,7 @@ function newYear(){
   }
 }
 
-
+//controls up and down arrows
 function updateChange(){
   if (popchange > 0){
     gainingPeople = true;
@@ -303,6 +310,6 @@ function updateChange(){
   }
   else if (popchange < 0){
     losingPeople = true;
-    gainingPeople = false;    
+    gainingPeople = false;
   }
 }
