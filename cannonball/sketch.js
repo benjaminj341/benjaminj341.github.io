@@ -20,6 +20,10 @@ function draw() {
 
     displayCannon();
     updateBullets();
+
+    if (mouseIsPressed){
+        fire();        
+    }
 }
 
 function displayCannon(){
@@ -32,9 +36,7 @@ function displayCannon(){
     pop();
 }
 
-function mouseClicked(){
-    fire();
-}
+
 
 function fire(){
     let thisBullet = {
@@ -45,12 +47,20 @@ function fire(){
         speed: 5
     };
     bullets.push(thisBullet);
+
 }
 
 function updateBullets(){
-    for (let thisBullet of bullets){
-        thisBullet.x += thisBullet.speed * cos(thisBullet.angle);
-        thisBullet.y += thisBullet.speed * sin(thisBullet.angle);
-        ellipse(thisBullet.x, thisBullet.y, thisBullet.radius);
+    for (let i = bullets.length - 1; i > 0; i--){
+        if (bullets[i].x)
+
+
+        bullets[i].x += bullets[i].speed * cos(bullets[i].angle);
+        bullets[i].y += bullets[i].speed * sin(bullets[i].angle);
+        ellipse(bullets[i].x, bullets[i].y, bullets[i].radius);
+
+        if (thisBullet.x < 0 || thisBullet.x > width || thisBullet.y < 0 || thisBullet.y > height){
+            bullets.splice(thisBullet);
+        }   
     }
 }
