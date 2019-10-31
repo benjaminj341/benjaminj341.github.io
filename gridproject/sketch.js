@@ -1,6 +1,5 @@
 let grid = [];
 let fillcolor;
-let phase = "start";
 let Xcor = 50;
 let Ycor = 20;
 
@@ -9,15 +8,13 @@ function setup(){
 }
 
 function draw(){
-  
-}
-
-
-
-function mouseClicked(){
   colorGrid();
-  phase = "play";
+
+  if (millis() === 10000){
+
+  }
 }
+
 
 function colorGrid(){
   for (x = 0; x < width; x++){
@@ -38,7 +35,7 @@ function CreateGrid(){
   for (x=0; x < width; x++){
     for (y=0; y < height; y++){
       if (grid[x][y] === 1) {
-        fill(255)
+        fill(255);
       }
       else {
         fill(0);
@@ -48,10 +45,23 @@ function CreateGrid(){
   }
 }
 
-function keyPressed() {
-  if (phase === "play"){
-    if (keyCode === 68){
-      Xcor += 1;
-    }
+function keyTyped() {
+  if (key === 'd'){
+    grid[Xcor][Ycor] = grid[Xcor + 1][Ycor];
+  }
+  
+  else if (key === 'w'){
+    grid = [];
+    Ycor -= 1;   
+  }
+
+  else if (key === 'a'){
+    grid = [];
+    Xcor -= 1;   
+  }
+
+  else if (key === 's'){
+    grid = [];
+    Ycor += 1;   
   }
 }
