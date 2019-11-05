@@ -1,23 +1,27 @@
 let grid = [];
-let fillcolor;
 let Xcor = 10;
 let Ycor = 10;
-let rows = 400;
-let cols = 400;
+let rows = 80;
+let cols = 39.5 * 2;
 let moveMode = "right";
-
+let t1;
+let foodx;
+let foody;
+let snakeLength = 1;
 
 function setup(){
   createCanvas(windowWidth, windowHeight);
   colorGrid();
-  
+  t1 = millis();
+
+  genFood();
 }
+
+
 
 function draw(){
   CreateGrid();
-  let t1 = millis();
-
-  if (millis() - t1 >= 1000){
+  if (millis() - t1 >= 250){
     update();
     t1 = millis();
   }
@@ -35,8 +39,7 @@ function colorGrid(){
         grid[x].push(0);
       }      
     }
-  }
-  
+  } 
 }
 
 function CreateGrid(){
@@ -45,10 +48,13 @@ function CreateGrid(){
       if (grid[x][y] === 1) {
         fill(255);
       }
+      else if (grid[x][y] === 2){
+        fill("red");
+      }
       else {
         fill(0);
       }    
-      rect(x * 10, y * 10, 10, 10);    
+      rect(x * 20, y * 20, 20, 20);    
     }
   }
 }
@@ -73,24 +79,72 @@ function keyTyped() {
 
 function update(){
   if (moveMode === "down"){
+    if (grid[Xcor][Ycor + 1] === 2){
+      eat();
+    }
+
     grid[Xcor][Ycor] = 0;
     Ycor += 1;
     grid[Xcor][Ycor] = 1;
+    for (let i=0; i < snakeLength; i++){
+      grid[Xcor][Ycor - i] = 1;
+    }
+
+
   }
   else if (moveMode === "up"){
+    if (grid[Xcor][Ycor - 1] === 2){
+      eat();
+    }
+
     grid[Xcor][Ycor] = 0;
     Ycor -= 1;
     grid[Xcor][Ycor] = 1;
+    for (let i=0; i < snakeLength; i++){
+      grid[Xcor][Ycor + i] = 1;
+    }
+
+
   }
   else if (moveMode === "left"){
+    if (grid[Xcor - 1][Ycor] === 2){
+      eat();
+    }
+
+
     grid[Xcor][Ycor] = 0;
     Xcor -= 1;
     grid[Xcor][Ycor] = 1;
+    for (let i=0; i < snakeLength; i++){
+      grid[Xcor + i][Ycor] = 1;
+    }
+
+
   }
   else if (moveMode === "right"){
-    grid[Xcor][Ycor] = 0
+    if (grid[Xcor + 1][Ycor] === 2){
+      eat();
+    }
+
+
+    grid[Xcor][Ycor] = 0;
     Xcor += 1;
     grid[Xcor][Ycor] = 1;
-    console.log(1);
+    for (let i=0; i < snakeLength; i++){
+      grid[Xcor - i][Ycor] = 1;
+    }
   } 
+}
+
+function genFood(){
+  foodx = Math.round(random(0, 50));
+  foody = Math.round(random(0, 50));
+
+  grid[foodx][foody] = 2;
+}
+
+
+function eat(){
+  snakeLength += 1;
+  genFood();
 }
