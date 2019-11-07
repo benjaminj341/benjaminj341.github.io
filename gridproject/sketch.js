@@ -1,5 +1,5 @@
 let grid = [];
-let Xcor = 10;
+let Xcor = 75;
 let Ycor = 10;
 let rows = 80;
 let cols = 39.5 * 2;
@@ -89,8 +89,6 @@ function update(){
     for (let i=0; i < snakeLength; i++){
       grid[Xcor][Ycor - i] = 1;
     }
-
-
   }
   else if (moveMode === "up"){
     if (grid[Xcor][Ycor - 1] === 2){
@@ -138,7 +136,7 @@ function update(){
 
 function genFood(){
   foodx = Math.round(random(0, 50));
-  foody = Math.round(random(0, 50));
+  foody = Math.round(random(0, 39));
 
   grid[foodx][foody] = 2;
 }
