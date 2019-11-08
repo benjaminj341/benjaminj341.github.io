@@ -1,5 +1,5 @@
 let grid = [];
-let Xcor = 75;
+let Xcor = 50;
 let Ycor = 10;
 let rows = 80;
 let cols = 39.5 * 2;
@@ -8,6 +8,8 @@ let t1;
 let foodx;
 let foody;
 let snakeLength = 1;
+let snake = [];
+
 
 function setup(){
   createCanvas(windowWidth, windowHeight);
@@ -29,9 +31,9 @@ function draw(){
 
 
 function colorGrid(){
-  for (x = 0; x < cols; x++){
+  for (let x = 0; x < cols; x++){
     grid.push([]);
-    for (y = 0; y < rows; y++){
+    for (let y = 0; y < rows; y++){
       if (x === Xcor && y === Ycor){
         grid[x].push(1);
       }
@@ -86,9 +88,7 @@ function update(){
     grid[Xcor][Ycor] = 0;
     Ycor += 1;
     grid[Xcor][Ycor] = 1;
-    for (let i=0; i < snakeLength; i++){
-      grid[Xcor][Ycor - i] = 1;
-    }
+
   }
   else if (moveMode === "up"){
     if (grid[Xcor][Ycor - 1] === 2){
@@ -98,11 +98,10 @@ function update(){
     grid[Xcor][Ycor] = 0;
     Ycor -= 1;
     grid[Xcor][Ycor] = 1;
-    for (let i=0; i < snakeLength; i++){
-      grid[Xcor][Ycor + i] = 1;
-    }
-
-
+    //for (let i=0; i <= snakeLength; i++){
+      //grid[Xcor][Ycor + i] = 1;
+    //}
+    
   }
   else if (moveMode === "left"){
     if (grid[Xcor - 1][Ycor] === 2){
@@ -113,10 +112,10 @@ function update(){
     grid[Xcor][Ycor] = 0;
     Xcor -= 1;
     grid[Xcor][Ycor] = 1;
-    for (let i=0; i < snakeLength; i++){
-      grid[Xcor + i][Ycor] = 1;
-    }
-
+    //for (let i=0; i <= snakeLength; i++){
+      //grid[Xcor + i][Ycor] = 1;
+    //}
+    
 
   }
   else if (moveMode === "right"){
@@ -128,15 +127,21 @@ function update(){
     grid[Xcor][Ycor] = 0;
     Xcor += 1;
     grid[Xcor][Ycor] = 1;
-    for (let i=0; i < snakeLength; i++){
-      grid[Xcor - i][Ycor] = 1;
-    }
-  } 
+    //for (let i=0; i <= snakeLength; i++){
+      //grid[Xcor - i][Ycor] = 1;
+    //}
+  }
+  snake.push({x: Xcor, y: Ycor});
+  
+  for (let i = 0; i < snake.length; i++){
+    grid[snake[i].x][snake[i].y] = 1;
+  }
+
 }
 
 function genFood(){
-  foodx = Math.round(random(0, 50));
-  foody = Math.round(random(0, 39));
+  foodx = Math.round(random(70));
+  foody = Math.round(random(39));
 
   grid[foodx][foody] = 2;
 }
@@ -144,5 +149,17 @@ function genFood(){
 
 function eat(){
   snakeLength += 1;
+
+  if (moveMode = "left"){
+    snake.push({x: Xcor + snake.length, y: Ycor});
+  }
+
+  else if (moveMode = "right"){
+    snake.push({x: Xcor - snake.length, y: Ycor});
+  }
+
+  else if (moveMode = "up"){
+    snake.push({x: Xcor, y: Ycor + snake.length});
+  }
   genFood();
 }
